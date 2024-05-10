@@ -20,6 +20,6 @@ public class Product {
     @OneToOne
     @JoinColumn(name = "image_id")
     private Image image;
-    @OneToMany
+    @OneToMany(mappedBy = "product")
     private List<ProductPrice> productPrices;
 }

@@ -16,7 +16,12 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     @Override
     public Customer create(Customer customer) {
-        return customerRepository.save(customer);
+        Customer newCustomer = Customer.builder()
+                .name(customer.getName())
+                .phone(customer.getPhone())
+                .point(0)
+                .build();
+        return customerRepository.save(newCustomer);
     }
 
     @Override
