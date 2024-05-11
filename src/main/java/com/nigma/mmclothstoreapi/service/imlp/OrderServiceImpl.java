@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponse getById(String id) {
-       Order order =  orderRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order Not Found"));;
+       Order order =  orderRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order Not Found"));
        return OrderResponse.builder()
                .id(order.getId())
                .transDate(order.getTransDate())

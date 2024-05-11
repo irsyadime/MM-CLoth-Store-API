@@ -1,9 +1,14 @@
 package com.nigma.mmclothstoreapi.service.imlp;
 
+import com.nigma.mmclothstoreapi.model.dto.response.CustomerResponse;
 import com.nigma.mmclothstoreapi.model.dto.response.MerchantResponse;
 import com.nigma.mmclothstoreapi.model.entity.Merchant;
+import com.nigma.mmclothstoreapi.model.entity.Order;
+import com.nigma.mmclothstoreapi.model.entity.ProductPrice;
 import com.nigma.mmclothstoreapi.repository.MerchantRepository;
 import com.nigma.mmclothstoreapi.service.MerchantService;
+import com.nigma.mmclothstoreapi.service.OrderService;
+import com.nigma.mmclothstoreapi.service.ProductPriceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MerchantServiceImpl implements MerchantService {
     private final MerchantRepository merchantRepository;
+    private final ProductPriceService productPriceService;
+    private final OrderService orderService;
     @Override
     public Merchant create(Merchant merchant) {
         return merchantRepository.save(merchant);
@@ -40,5 +47,21 @@ public class MerchantServiceImpl implements MerchantService {
             );
         }
         return merchantResponses;
+    }
+
+    @Override
+    public List<CustomerResponse> getAllCustomerBoughtProduct(String id) {
+        List<CustomerResponse> customerResponses = new ArrayList<>();
+        ProductPrice productPrice = productPriceService.getByProductId(id);
+        for(Order order : productPrice.getOrders()){
+            customerResponses.add(
+                    CustomerResponse.builder()
+                            .id(order.getCustomer().getName())
+                            .name(order.getCustomer().getName())
+                            .phone(order.getCustomer().getPhone())
+                            .build()
+            );
+        }
+        return customerResponses;
     }
 }

@@ -1,35 +1,32 @@
 package com.nigma.mmclothstoreapi.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.nigma.mmclothstoreapi.constant.Status;
 import jakarta.persistence.*;
 import lombok.*;
-
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "t_order")
+@Table(name = "t_exchange_reward")
 @Getter
 @Setter
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+
+public class ExchangeReward {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @Column(name = "trans_date")
-    private LocalDateTime transDate;
+    @Column(name = "exchange_date")
+    private LocalDateTime exchangeDate;
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @JsonBackReference("customer-orders")
+    @JsonBackReference("customer-exchangeReward")
     private Customer customer;
     @ManyToOne
-    @JoinColumn(name = "product_price_id")
-    @JsonBackReference("productPrice-orders")
-    private ProductPrice productPrice;
-    private Integer qty;
-    private Status status;
+    @JoinColumn(name = "reward_id")
+    @JsonBackReference("reward-exchangeReward")
+    private Reward reward;
 
 }

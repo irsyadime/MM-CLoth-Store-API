@@ -27,4 +27,7 @@ public class Customer {
     @OneToOne
     @JoinColumn(name = "user_credential_id")
     private UserCredential userCredential;
+    @OneToMany(mappedBy = "customer")
+    @JsonManagedReference("customer-exchangeReward")
+    private List<ExchangeReward> exchangeRewards;
 }

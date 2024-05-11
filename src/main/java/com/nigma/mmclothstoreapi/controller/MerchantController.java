@@ -2,6 +2,7 @@ package com.nigma.mmclothstoreapi.controller;
 
 import com.nigma.mmclothstoreapi.constant.Route;
 import com.nigma.mmclothstoreapi.model.dto.response.CommmonResponse;
+import com.nigma.mmclothstoreapi.model.dto.response.CustomerResponse;
 import com.nigma.mmclothstoreapi.model.dto.response.MerchantResponse;
 import com.nigma.mmclothstoreapi.model.entity.Merchant;
 import com.nigma.mmclothstoreapi.service.MerchantService;
@@ -46,6 +47,17 @@ public class MerchantController {
                 .statusCode(HttpStatus.OK.value())
                 .data(merchant)
                 .message("Get merchant data")
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(commmonResponse);
+    }
+
+    @GetMapping("/product/{id}")
+    public ResponseEntity<?> getAllCustomerBoughtProduct(@PathVariable String id){
+        List<CustomerResponse> responses = merchantService.getAllCustomerBoughtProduct(id);
+        CommmonResponse<List<CustomerResponse>> commmonResponse = CommmonResponse.<List<CustomerResponse>>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Get All user who bought this product")
+                .data(responses)
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(commmonResponse);
     }
