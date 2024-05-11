@@ -2,6 +2,7 @@ package com.nigma.mmclothstoreapi.controller;
 
 import com.nigma.mmclothstoreapi.constant.Route;
 import com.nigma.mmclothstoreapi.model.dto.response.CommmonResponse;
+import com.nigma.mmclothstoreapi.model.dto.response.CustomerResponse;
 import com.nigma.mmclothstoreapi.model.entity.Customer;
 import com.nigma.mmclothstoreapi.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +31,10 @@ public class CustomerController {
     }
     @GetMapping
     public ResponseEntity<?> getAll(){
-        List<Customer> customers = customerService.getAll();
-        CommmonResponse<List<Customer>> commmonResponse = CommmonResponse.<List<Customer>>builder()
+        List<CustomerResponse> responses = customerService.getAll();
+        CommmonResponse<List<CustomerResponse>> commmonResponse = CommmonResponse.<List<CustomerResponse>>builder()
                 .statusCode(HttpStatus.OK.value())
-                .data(customers)
+                .data(responses)
                 .message("Get all customer")
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(commmonResponse);

@@ -1,7 +1,11 @@
 package com.nigma.mmclothstoreapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "m_product_price")
@@ -20,10 +24,15 @@ public class ProductPrice {
     private Integer stock;
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonBackReference("product-productPrices")
     private Product product;
     @ManyToOne
     @JoinColumn(name = "merchant_id")
+    @JsonBackReference("merchant-productPrices")
     private Merchant merchant;
     @Column(name = "is_active")
     private Boolean isActive;
+    @OneToMany(mappedBy = "productPrice", cascade = CascadeType.ALL)
+    @JsonManagedReference("productPrice-orders")
+    private List<Order> orders;
 }

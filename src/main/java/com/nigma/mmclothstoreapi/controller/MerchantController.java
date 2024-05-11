@@ -2,6 +2,7 @@ package com.nigma.mmclothstoreapi.controller;
 
 import com.nigma.mmclothstoreapi.constant.Route;
 import com.nigma.mmclothstoreapi.model.dto.response.CommmonResponse;
+import com.nigma.mmclothstoreapi.model.dto.response.MerchantResponse;
 import com.nigma.mmclothstoreapi.model.entity.Merchant;
 import com.nigma.mmclothstoreapi.service.MerchantService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class MerchantController {
     private final MerchantService merchantService;
 
     @PostMapping
-    public ResponseEntity<?> createCustomer(@RequestBody Merchant request){
+    public ResponseEntity<?> createMerchant(@RequestBody Merchant request){
         Merchant merchant = merchantService.create(request);
         CommmonResponse<Merchant> commmonResponse = CommmonResponse.<Merchant>builder()
                 .statusCode(HttpStatus.CREATED.value())
@@ -30,8 +31,8 @@ public class MerchantController {
     }
     @GetMapping
     public ResponseEntity<?> getAll(){
-        List<Merchant> merchants = merchantService.getAll();
-        CommmonResponse<List<Merchant>> commmonResponse = CommmonResponse.<List<Merchant>>builder()
+        List<MerchantResponse> merchants = merchantService.getAll();
+        CommmonResponse<List<MerchantResponse>> commmonResponse = CommmonResponse.<List<MerchantResponse>>builder()
                 .statusCode(HttpStatus.OK.value())
                 .data(merchants)
                 .message("Get all merchant")

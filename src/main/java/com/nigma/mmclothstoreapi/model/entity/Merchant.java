@@ -1,5 +1,6 @@
 package com.nigma.mmclothstoreapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,10 @@ public class Merchant {
     private String id;
     private String name;
     private String phone;
-    @OneToMany(mappedBy = "merchant")
+    @OneToMany(mappedBy = "merchant",cascade = CascadeType.ALL)
+    @JsonManagedReference("merchant-productPrices")
     private List<ProductPrice> productPrices;
+    @OneToOne
+    @JoinColumn(name = "user_credential_id")
+    private UserCredential userCredential;
 }

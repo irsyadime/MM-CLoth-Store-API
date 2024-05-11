@@ -1,5 +1,6 @@
 package com.nigma.mmclothstoreapi.service.imlp;
 
+import com.nigma.mmclothstoreapi.model.dto.response.MerchantResponse;
 import com.nigma.mmclothstoreapi.model.entity.Merchant;
 import com.nigma.mmclothstoreapi.repository.MerchantRepository;
 import com.nigma.mmclothstoreapi.service.MerchantService;
@@ -8,11 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MerhantServiceImpl implements MerchantService {
+public class MerchantServiceImpl implements MerchantService {
     private final MerchantRepository merchantRepository;
     @Override
     public Merchant create(Merchant merchant) {
@@ -25,7 +27,18 @@ public class MerhantServiceImpl implements MerchantService {
     }
 
     @Override
-    public List<Merchant> getAll() {
-        return merchantRepository.findAll();
+    public List<MerchantResponse> getAll() {
+        List<Merchant> merchants =  merchantRepository.findAll();
+        List<MerchantResponse> merchantResponses = new ArrayList<>();
+        for(Merchant merchant : merchants){
+            merchantResponses.add(
+                    MerchantResponse.builder()
+                            .id(merchant.getId())
+                            .name(merchant.getName())
+                            .phone(merchant.getPhone())
+                            .build()
+            );
+        }
+        return merchantResponses;
     }
 }
