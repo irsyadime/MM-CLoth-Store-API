@@ -8,6 +8,7 @@ import com.nigma.mmclothstoreapi.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('MERCHANT')")
     public ResponseEntity<?> createProductAndPrice(@RequestBody ProductRequest request){
         ProductResponse productResponse = productService.createProductAndPrice(request);
         CommmonResponse<ProductResponse> commmonResponse = CommmonResponse.<ProductResponse>builder()
@@ -53,6 +55,7 @@ public class ProductController {
     }
 
     @PutMapping
+    @PreAuthorize("hasAnyRole('MERCHANT')")
     public ResponseEntity<?> update(@RequestBody ProductRequest request){
         ProductResponse productResponse = productService.update(request);
         CommmonResponse<ProductResponse> commmonResponse = CommmonResponse.<ProductResponse>builder()
@@ -64,12 +67,14 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('MERCHANT')")
     public ResponseEntity<?> delete(@PathVariable String id){
         productService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/price/{id}")
+    @PreAuthorize("hasAnyRole('MERCHANT')")
     public ResponseEntity<?> deletePrice(@PathVariable String id){
         productService.deletePrice(id);
         return ResponseEntity.noContent().build();

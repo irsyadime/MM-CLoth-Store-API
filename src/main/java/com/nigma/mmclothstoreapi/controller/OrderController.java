@@ -9,6 +9,7 @@ import com.nigma.mmclothstoreapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('CUSTOMER')")
     public ResponseEntity<?> createOrder(@RequestBody OrderRequest request){
         OrderResponse orderResponse = orderService.create(request);
         CommmonResponse<OrderResponse> commmonResponse = CommmonResponse.<OrderResponse>builder()
@@ -41,6 +43,7 @@ public class OrderController {
     }
 
     @PutMapping("/pay/{id}")
+    @PreAuthorize("hasAnyRole('CUSTOMER')")
     public ResponseEntity<?> payOrder(@PathVariable String id){
         PaymentResponse response = orderService.payOrder(id);
         CommmonResponse<PaymentResponse> commmonResponse = CommmonResponse.<PaymentResponse>builder()

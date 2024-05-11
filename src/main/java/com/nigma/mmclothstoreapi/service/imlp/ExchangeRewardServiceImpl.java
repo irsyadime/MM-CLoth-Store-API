@@ -33,7 +33,7 @@ public class ExchangeRewardServiceImpl implements ExchangeRewardService {
     public ExchangeResponse create(ExchangeRequest request) {
         Customer customer = customerService.getById(request.getCustomerId());
         Reward reward = rewardService.getById(request.getRewardId());
-        if(customer.getPoint() > reward.getPointCost()){
+        if(customer.getPoint() >= reward.getPointCost()){
             customer.setPoint(customer.getPoint() - reward.getPointCost());
             ExchangeReward exchangeReward = ExchangeReward.builder()
                     .exchangeDate(LocalDateTime.now())

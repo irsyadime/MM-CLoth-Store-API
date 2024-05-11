@@ -9,6 +9,7 @@ import com.nigma.mmclothstoreapi.service.MerchantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,7 @@ public class MerchantController {
     }
 
     @GetMapping("/product/{id}")
+    @PreAuthorize("hasAnyRole('MERCHANT')")
     public ResponseEntity<?> getAllCustomerBoughtProduct(@PathVariable String id){
         List<CustomerResponse> responses = merchantService.getAllCustomerBoughtProduct(id);
         CommmonResponse<List<CustomerResponse>> commmonResponse = CommmonResponse.<List<CustomerResponse>>builder()

@@ -22,6 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .name(customer.getName())
                 .phone(customer.getPhone())
                 .point(0)
+                .userCredential(customer.getUserCredential())
                 .build();
         return customerRepository.save(newCustomer);
     }

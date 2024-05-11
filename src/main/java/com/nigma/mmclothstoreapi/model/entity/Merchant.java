@@ -22,7 +22,7 @@ public class Merchant {
     @OneToMany(mappedBy = "merchant",cascade = CascadeType.ALL)
     @JsonManagedReference("merchant-productPrices")
     private List<ProductPrice> productPrices;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_credential_id")
     private UserCredential userCredential;
 }

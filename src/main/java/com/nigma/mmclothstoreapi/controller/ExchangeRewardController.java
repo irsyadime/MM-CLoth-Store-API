@@ -8,6 +8,7 @@ import com.nigma.mmclothstoreapi.service.ExchangeRewardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class ExchangeRewardController {
     private final ExchangeRewardService exchangeRewardService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('CUSTOMER')")
     public ResponseEntity<?> createExchangeRewardRequest(@RequestBody ExchangeRequest request){
         ExchangeResponse response = exchangeRewardService.create(request);
         CommmonResponse<ExchangeResponse> commmonResponse = CommmonResponse.<ExchangeResponse>builder()

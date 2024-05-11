@@ -63,6 +63,7 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public RegisterResponse registerMerchant(AuthRequest request) {
         try{

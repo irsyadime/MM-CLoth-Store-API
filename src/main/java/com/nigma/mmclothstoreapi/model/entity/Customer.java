@@ -24,7 +24,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonManagedReference("customer-orders")
     private List<Order> orders;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_credential_id")
     private UserCredential userCredential;
     @OneToMany(mappedBy = "customer")
